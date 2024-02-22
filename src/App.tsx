@@ -1,37 +1,28 @@
 import { useState } from "react";
+import handleSubmit  from './modules/packagerModule.ts'
 
 function App() {
-
-  type CalculatorType = {
-    cart_value: number,
-    delivery_distance: number,
-    number_of_items: number,
-    time: string
-  }
-
-  type CalculatorStateType = { cart: CalculatorType}
-
-  const initState: CalculatorStateType = { cart: {} }
-
-  const [cart, setCart] = useState<CalculatorStateType>(initState)
-
-  const handleSubmit = () => {
-    
-  }
+  const [cartValue, setCartValue] = useState<string>("");
+  const [distance, setDistance] = useState<string>("");
+  const [items, setItems] = useState<string>("");
+  const [time, setTime] = useState<string>("");
 
   return (
     <section className="calculator">
       <h1 className="header">Delivery Fee calculator</h1>
 
-      <form action="" className="to__deliver">
+      <form className="to__deliver" onSubmit={(e) => handleSubmit(e, time)}>
         <div>
           <label htmlFor="value">Cart value (€):</label>
           <input
             id="value"
+            name="cartValue"
             type="text"
+            required
+            value={cartValue}
+            onChange={(e) => setCartValue(e.target.value)}
             className="to__deliver-value"
             placeholder="0.00"
-            required
           />
         </div>
 
@@ -39,9 +30,13 @@ function App() {
           <label htmlFor="distance">Delivery distance (m):</label>
           <input
             id="distance"
+            name="distance"
             type="text"
-            className="to__deliver-distance"
             required
+            value={distance}
+            onChange={(e) => setDistance(e.target.value)}
+            className="to__deliver-distance"
+            placeholder="0"
           />
         </div>
 
@@ -49,18 +44,30 @@ function App() {
           <label htmlFor="items">Cart items: </label>
           <input
             id="items"
+            name="items"
             type="text"
-            className="to__deliver-items"
             required
+            value={items}
+            onChange={(e) => setItems(e.target.value)}
+            placeholder="0"
+            className="to__deliver-items"
           />
         </div>
 
         <div>
-          <label htmlFor="date">Delivery date: </label>
-          <input id="date" type="date" className="to__deliver-date" required />
+          <label htmlFor="time">Order time: </label>
+          <input
+            id="time"
+            name="time"
+            type="datetime-local"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            className="to__deliver-time"
+            required
+          />
         </div>
 
-        <button type="submit" onSubmit={handleSubmit}>Calculate</button>
+        <button type="submit">Calculate</button>
       </form>
     </section>
   );
