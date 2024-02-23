@@ -1,5 +1,5 @@
 import { useState } from "react";
-import handleSubmit  from './modules/packagerModule.ts'
+import handleSubmit  from './modules/submitModule.ts'
 
 function App() {
   const [cartValue, setCartValue] = useState<string>("");
@@ -11,7 +11,7 @@ function App() {
     <section className="calculator">
       <h1 className="header">Delivery Fee calculator</h1>
 
-      <form className="to__deliver" onSubmit={(e) => handleSubmit(e, time)}>
+      <form className="to__deliver" onSubmit={async (e) => await handleSubmit(e, time)}>
         <div>
           <label htmlFor="value">Cart value (€):</label>
           <input

@@ -1,4 +1,5 @@
 import { FormEvent } from "react";
+import makeRequest from "./requestModule.ts";
 
 const handleSubmit = (e: FormEvent<HTMLFormElement>, time: string) => {
     e.preventDefault();
@@ -9,8 +10,10 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>, time: string) => {
     formData.set("time", `${UTCTime.toISOString()}`);
 
     const dataObject = Object.fromEntries(formData.entries());
-    const serverRequest = JSON.stringify(dataObject)
-    console.log(serverRequest)
+    const data = JSON.stringify(dataObject)
+    console.log(data)
+
+    makeRequest(data)
 }
 
 export default handleSubmit
