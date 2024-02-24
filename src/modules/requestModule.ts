@@ -2,18 +2,15 @@ import axios from 'axios';
 
 const makeRequest = async (data: string) => {
 
-    await axios.post('', data,{baseURL: 'http://localhost:8080',
+  await axios.post('/api', data, {
+    baseURL: 'http://localhost:8080',
     method: 'post',
     headers: {
-      'Content-Type': 'text',
-      'Content-Encoding': 'utf8'
-    }})
+      'Content-Type': 'application/json'
+    }
+  })
     .then(function (res): any {
-      console.log(res.data)
-      console.log(res.status)
-      console.log(res.statusText)
-      console.log(res.headers);
-      console.log(res.config);
+      console.log(res.config.data);
     })
 }
 
