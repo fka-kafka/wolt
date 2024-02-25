@@ -1,5 +1,5 @@
 import { useState } from "react";
-import handleSubmit  from './modules/submitModule.ts'
+import handleSubmit from "./modules/submitModule.ts";
 
 function App() {
   const [cartValue, setCartValue] = useState<string>("");
@@ -7,11 +7,19 @@ function App() {
   const [items, setItems] = useState<string>("");
   const [time, setTime] = useState<string>("");
 
+  const today: Date = new Date();
+  const min: string = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}T00:00`;
+
   return (
     <section className="calculator">
       <h1 className="header">Delivery Fee calculator</h1>
 
-      <form className="to__deliver" onSubmit={async (e) => await handleSubmit(e, time)}>
+      <form
+        className="to__deliver"
+        onSubmit={(e) => handleSubmit(e, cartValue, distance, items, time)}
+      >
         <div>
           <label htmlFor="value">Cart value (€):</label>
           <input
@@ -61,6 +69,7 @@ function App() {
             name="time"
             type="datetime-local"
             value={time}
+            min={min}
             onChange={(e) => setTime(e.target.value)}
             className="to__deliver-time"
             required

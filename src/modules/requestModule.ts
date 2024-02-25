@@ -9,9 +9,7 @@ const makeRequest = async (data: string) => {
       'Content-Type': 'application/json'
     }
   })
-    .then(function (res): any {
-      console.log(res.config.data);
-    })
+    .then()
 }
 
 export default makeRequest;
