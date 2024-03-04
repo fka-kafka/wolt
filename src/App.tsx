@@ -1,16 +1,64 @@
-import { useState } from "react";
-import handleSubmit from "./modules/submitModule.ts";
+import { useState, FormEvent } from "react";
+import axios from "axios";
 
 function App() {
   const [cartValue, setCartValue] = useState<string>("");
   const [distance, setDistance] = useState<string>("");
   const [items, setItems] = useState<string>("");
   const [time, setTime] = useState<string>("");
+  const [deliveryFee, setDeliveryFee] = useState<number | boolean>(0);
 
   const today: Date = new Date();
   const min: string = `${today.getFullYear()}-${
     today.getMonth() + 1
   }-${today.getDate()}T00:00`;
+
+  const handleSubmit = async (
+    e: FormEvent<HTMLFormElement>,
+    cartValue: string,
+    distance: string,
+    items: string,
+    time: string
+  ) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const UTCTime = new Date(time);
+
+    formData.set("cartValue", cartValue.replace(/^0+(?=\d)/, ""));
+    formData.set("distance", distance.replace(/^0+(?=\d)/, ""));
+    formData.set("items", items.replace(/^0+(?=\d)/, ""));
+    formData.set("time", `${UTCTime.toISOString()}`);
+
+    const dataObject = Object.fromEntries(formData.entries());
+    const data = JSON.stringify(dataObject);
+    const responseData = await axios
+      .post("/api", data, {
+        baseURL: "http://localhost:8080",
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        responseType: "json",
+      })
+      .then((res) => {
+        return res.data.deliveryFee;
+      });
+    setDeliveryFee(responseData);
+
+    return responseData;
+  };
+
+  const deliveryFeeContent =
+    typeof deliveryFee === "number" ? (
+      <div className="result">
+        <p>Delivery Fee: € {deliveryFee}</p>
+      </div>
+    ) : (
+      <div className="result">
+        <p>Delivery Fee exceeded. <br/> Review cart or explore different delivery options.</p>
+      </div>
+    );
 
   return (
     <section className="calculator">
@@ -78,6 +126,7 @@ function App() {
 
         <button type="submit">Calculate</button>
       </form>
+      {deliveryFeeContent}
     </section>
   );
 }
