@@ -6,7 +6,7 @@ Technologies used:
 
 ## Delivery Fee Calculator
 
-The goal of the assignment was to showcase my coding skills and ability to develop features. This is a highly important part of the hiring process so it's crucial to put effort into this without making it too bloated. Reviewers should put weight on three main aspects: code quality, maintainability, and testing. The task was to write a delivery fee calculator. This code is needed when a customer is ready with their shopping cart and we’d like to show them how much the delivery will cost. The delivery price depends on the cart value, the number of items in the cart, the time of the order, and the delivery distance.
+The goal of the assignment was to showcase my coding skills and ability to develop features.  Reviewers should put weight on three main aspects: code quality, maintainability, and testing. The task was to write a delivery fee calculator. This code is needed when a customer is ready with their shopping cart and we’d like to show them how much the delivery will cost. The delivery price depends on the cart value, the number of items in the cart, the time of the order, and the delivery distance.
 
 #### Input fields
 
