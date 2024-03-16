@@ -1,5 +1,5 @@
-import { ReactElement, createContext, useState, FormEvent } from "react";
-import axios from "axios";
+import { createContext, useState, FormEvent, ReactNode } from "react";
+import axiosCall from "../modules/axiosSubmitModule.ts";
 
 export type FormStateType = {
   cartValue: string;
@@ -9,7 +9,7 @@ export type FormStateType = {
 };
 
 export type ChildrenType = {
-  children: ReactElement | ReactElement[];
+  children: ReactNode;
 };
 
 export const FormContext = createContext<any>("");
@@ -44,22 +44,10 @@ export const FormProvider = ({ children }: ChildrenType) => {
     const dataObject = Object.fromEntries(formInputs.entries());
     const data = JSON.stringify(dataObject);
 
-    const responseData = await axios
-      .post("/api", data, {
-        baseURL: "http://localhost:8080",
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        responseType: "json",
-      })
-      .then((res) => {
-        return res.data.deliveryFee;
-      });
-    setDeliveryFee(responseData);
-
-    return responseData;
+    const computation = await axiosCall(data);
+    setDeliveryFee(computation);
   };
+
   const deliveryFeeContent =
     typeof deliveryFee === "number" ? (
       <div className="result">
